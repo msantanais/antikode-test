@@ -1,0 +1,112 @@
+.form-floating {
+  position: relative;
+  > .form-input,
+  div .form-input,
+  > .form-select {
+    height: $form-floating-height;
+    &--large {
+      height: $form-floating-height-large;
+    }
+  }
+  .label-container {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 96.7%;
+    background: white;
+    z-index: 0;
+    height: 23px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 5px;
+    &.is-error,
+    &.is-success {
+      background-color: transparent;
+    }
+  }
+  &.custom-input {
+    &.dropdown {
+      > span.label,
+      div span.label {
+        top: 4px;
+      }
+    }
+  }
+  > span.label,
+  div span.label {
+    // Main Class Label
+    &--large {
+      top: 8px;
+      font-size: $font-size-base;
+    }
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    font-size: 14px;
+    z-index: 1;
+    padding: $form-floating-padding-y $form-floating-padding-x;
+    pointer-events: none;
+    border: $input-border-width solid transparent;
+    transform-origin: 0 0;
+    transition: $form-floating-transition;
+    color: $n-muted-text;
+  }
+
+  > .form-input,
+  div .form-input {
+    padding: $form-floating-padding-y $form-floating-padding-x;
+    &::placeholder {
+      color: transparent;
+    }
+    &:focus,
+    &:not(:placeholder-shown) {
+      &::placeholder {
+        color: $n-placeholder;
+      }
+      padding-top: 32px;
+    }
+    &:-webkit-autofill {
+      padding-top: $form-floating-input-padding-t;
+      padding-bottom: $form-floating-input-padding-b;
+    }
+  }
+
+  > .form-select {
+    padding-top: $form-floating-input-padding-t;
+    padding-bottom: $form-floating-input-padding-b;
+  }
+
+  > .form-input:focus,
+  div .form-input:focus,
+  > .form-input:not(:placeholder-shown),
+  div .form-input:not(:placeholder-shown),
+  > .form-select {
+    ~ span.label {
+      &--large {
+        font-size: $font-size-sm;
+        transform: $form-floating-label-transform-large;
+      }
+      padding: $input-padding-y $input-padding-x;
+      font-size: $font-size-sm;
+      color: $n-muted-text;
+      transform: $form-floating-label-transform;
+    }
+  }
+
+  > .form-input:-webkit-autofill,
+  div .form-input:-webkit-autofill {
+    ~ span.label {
+      padding: $input-padding-y $input-padding-x;
+      font-size: $font-size-sm;
+      color: $n-muted-text;
+      transform: $form-floating-label-transform;
+    }
+  }
+
+  > .form-input:disabled,
+  div .form-input:disabled {
+    ~ span.label {
+      color: $n-placeholder;
+    }
+  }
+}

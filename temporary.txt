@@ -1,0 +1,30 @@
+
+        // handleSetEvent({
+        //   xAxis: datum?.xAxis,
+        //   yAxis: datum?.yAxis,
+        //   datum: {
+        //     id: generateRandomId(10),
+        //     name: 'Testing Ahoy',
+        //     time: '',
+        //     guest: [],
+        //     markerColor: generatePastelColor(),
+        //   },
+        // });
+
+        
+        const payload = {
+          body: {
+            data: {
+              id: generateRandomId(10),
+              xAxis: datum?.xAxis,
+              yAxis: datum?.yAxis,
+              name: 'Event in indexedDB',
+              time: '13:00',
+              guest: 'santana131001@gmail.com',
+              markerColor: generatePastelColor(),
+            },
+          },
+        };
+        await handleCreateEvent(payload);
+
+        handleSetEvent({ xAxis: curr.xAxis, yAxis: curr.yAxis, datum: curr });

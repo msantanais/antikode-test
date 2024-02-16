@@ -1,0 +1,75 @@
+/*
+  The _directives.scss file exists due to a bug in Windi CSS where using @apply with imported folders (@import) 
+  would cause @apply to not be recognized. (temporary file until fixed)
+  
+  1. Date (_element-plus.scss)
+  2. Form Floating (_form-floating.scss)
+  3. Form Input (_form-input.scss)
+  4. Header (_header.scss)
+  5. Theme (_theme.scss)
+*/
+
+/* 2. Form Floating (_form-floating.scss) */
+.form-floating {
+  @apply mb-4;
+}
+
+.form-floating.custom-margin {
+  @apply mb-0;
+}
+
+.form-floating > .form-input:focus::placeholder,
+.form-floating > .form-input:not(:placeholder-shown)::placeholder,
+div .form-input:focus::placeholder,
+div .form-input:not(:placeholder-shown)::placeholder {
+  color: #878F99;
+}
+
+.form-floating > .form-input.is-error~ span.label,
+.form-floating > div .form-input.is-error~ span.label,
+div .form-floating > .form-input.is-error~ span.label,
+div .form-floating > div .form-input.is-error~ span.label {
+  color: #FF3030;
+}
+
+.form-floating > .form-input.is-success~ span.label,
+.form-floating > div .form-input.is-success~ span.label,
+div .form-floating > .form-input.is-success~ span.label,
+div .form-floating > div .form-input.is-success~ span.label {
+  color: #1A9F67 ;
+}
+
+/* 3. Form Input (_form-input.scss) */
+.form-input.is-error {
+  background: #FFEAEA;
+  border: 1px solid #FF5959;
+}
+.form-input.is-success {
+  border: 1px solid #1A9F67;
+}
+.form-label {
+  @apply text-sm mt-[2px];
+}
+
+.form-label--note {
+  color: #62686E;
+}
+
+.form-label--error {
+  color: #FF3030;
+}
+.form-normal {
+  @apply mb-4;
+}
+
+.form-normal.custom-margin {
+  @apply mb-0;
+}
+
+.form-normal > .form-label-text {
+  @apply text-sm mb-1;
+}
+
+.form-normal--inline {
+  @apply grid grid-cols-[100px,1fr];
+}

@@ -1,0 +1,288 @@
+.form-group {
+  position: relative;
+
+  > .form-input-prefix {
+    &--large {
+      top: 9px;
+    }
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: $input-with-prefix;
+  }
+
+  > .form-input-prefix ~ .form-input {
+    padding-left: $form-floating-padding-prefix;
+
+    ~ span.label {
+      left: $form-floating-padding-prefix;
+      padding-left: 0;
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      ~ span.label {
+        left: calc(#{$form-floating-padding-prefix} - 2px);
+        padding-left: 0;
+        transition: $form-floating-label-prefix;
+      }
+    }
+  }
+
+  > .form-input-prefix,
+  .form-input-prefix {
+    &--large {
+      top: 9px;
+    }
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: $input-with-prefix;
+  }
+
+  .form-input-prefix ~ .form-input {
+    padding-left: $form-floating-padding-prefix !important;
+
+    ~ span.label {
+      left: $form-floating-padding-prefix;
+      padding-left: 0;
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      ~ span.label {
+        left: calc(#{$form-floating-padding-prefix} - 2px);
+        padding-left: 0;
+        transition: $form-floating-label-prefix;
+      }
+    }
+  }
+
+  > .form-input-suffix,
+  div .form-input-suffix {
+    &--large {
+      top: 6px;
+    }
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $input-with-suffix;
+  }
+
+  > .form-input-suffix ~ .form-input {
+    padding-right: $form-floating-padding-suffix;
+
+    ~ span.label {
+      right: $form-floating-padding-suffix;
+      padding-left: 0;
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      ~ span.label {
+        right: calc(#{$form-floating-padding-suffix} - 2px);
+        padding-left: 0;
+        transition: $form-floating-label-suffix;
+      }
+    }
+  }
+}
+.form-input {
+  display: block;
+  width: 100%;
+  padding: $input-padding-y $input-padding-x;
+  font-size: $input-font-size;
+  font-weight: $input-font-weight;
+  line-height: $input-line-height;
+  color: $input-color;
+  background-color: $input-bg;
+  background-clip: padding-box;
+  border: $input-border-width solid $input-border-color;
+  appearance: none; // Fix appearance for date inputs in Safari
+  border-radius: $input-border-radius;
+  transition: $input-transition;
+  &--large {
+    font-size: $input-font-size-large;
+  }
+  &[type="file"] {
+    overflow: hidden;
+
+    &:not(:disabled):not([readonly]) {
+      cursor: pointer;
+    }
+  }
+
+  &:focus {
+    background-color: $input-focus-bg;
+    border-color: $n-placeholder;
+    outline: 0;
+  }
+
+  &::-webkit-date-and-time-value {
+    // Multiply line-height by 1em if it has no unit
+    height: if(unit($input-line-height) == "", $input-line-height * 1em, $input-line-height);
+  }
+
+  // Placeholder
+  &::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+
+  // Disabled and read-only inputs
+  &:disabled,
+  &[readonly] {
+    color: $n-placeholder;
+    background-color: $input-disabled-bg;
+    border-color: $input-disabled-border-color;
+    opacity: 1;
+  }
+}
+.form-input-color {
+  width: $form-color-width;
+  height: auto; // Override fixed browser height
+  padding: $input-padding-y;
+
+  &:not(:disabled):not([readonly]) {
+    cursor: pointer;
+  }
+
+  &::-moz-color-swatch {
+    height: if(unit($input-line-height) == "", $input-line-height * 1em, $input-line-height);
+    border-radius: $input-border-radius;
+  }
+
+  &::-webkit-color-swatch {
+    height: if(unit($input-line-height) == "", $input-line-height * 1em, $input-line-height);
+    border-radius: $input-border-radius;
+  }
+}
+.form-input-loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 14px 16px 14px 8px;
+}
+// Readonly controls as plain text
+.form-input-plaintext {
+  display: block;
+  width: 100%;
+  padding: $input-padding-y 0;
+  margin-bottom: 0;
+  line-height: $input-line-height;
+  color: $input-plaintext-color;
+  background-color: transparent;
+  border: solid transparent;
+  border-width: $input-border-width 0;
+}
+.form-normal {
+  position: relative;
+  > .form-input,
+  > .form-select {
+    height: $form-floating-height;
+  }
+
+  &--small {
+    > .form-input,
+    > .wrapper-input > .form-input,
+    > .form-group .form-input,
+    > .form-select {
+      height: $form-small-height;
+    }
+    > .form-label-text {
+      height: $form-small-height;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      margin-right: 8px;
+    }
+    .form-input-prefix {
+      &--large {
+        top: 9px;
+      }
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: $input-with-prefix-small !important;
+    }
+    > .form-input-prefix,
+    div .form-input-prefix {
+      &--large {
+        top: 9px;
+      }
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: $input-with-prefix-small !important;
+    }
+
+    > .form-input-suffix,
+    div .form-input-suffix {
+      &--large {
+        top: 9px;
+      }
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: $input-with-suffix-small !important;
+    }
+
+    .form-input-loading {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px 16px 10px 8px !important;
+    }
+  }
+
+  &--inline {
+    > .form-label-text {
+      margin: auto 0;
+      padding-right: 8px;
+    }
+
+    > .form-label {
+      margin-left: 0;
+      grid-column-start: 2;
+    }
+  }
+}
+.spinner {
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: loadingSpinner 1.1s infinite linear;
+  animation: loadingSpinner 1.1s infinite linear;
+}
+// Make sure textareas don't shrink too much when resized
+textarea {
+  height: auto !important;
+
+  &.form-input {
+    min-height: calc(#{$input-height} + 120px);
+    &.min-h-unset {
+      min-height: unset;
+    }
+  }
+}
+
+@-webkit-keyframes loadingSpinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loadingSpinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
