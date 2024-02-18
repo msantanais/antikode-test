@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import spinnerClass from '@/components/base/spinner/spinner.module.scss';
+import spinnerClass from '@/components/base/Spinner/spinner.module.scss';
 
 const Spinner = ({ customClass = 'border-[#0099ff]' }: { customClass?: string }) => {
   return (
