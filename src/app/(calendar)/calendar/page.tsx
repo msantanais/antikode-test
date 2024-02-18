@@ -1,8 +1,9 @@
-import CalendarBoard from "@/components/calendar/board";
+// import CalendarBoard from "@/components/calendar/board";
 
 const CalendarPage = () => {
   return (
-    <CalendarBoard />
+    <div>Calendar</div>
+    // <CalendarBoard />
   )
 }
 
