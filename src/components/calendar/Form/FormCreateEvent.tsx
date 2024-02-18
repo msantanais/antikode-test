@@ -5,8 +5,8 @@ import { object, string } from 'yup';
 import cn from 'classnames';
 import { FormikSubmit } from '@/utils/types/form';
 import useGeneral from '@/hooks/general/useGeneral';
-import Input from '@/components/form/input';
-import Button from '@/components/base/button';
+import Input from '@/components/form/Input';
+import Button from '@/components/base/Button';
 import IconUser from '@/components/icons/IconUser';
 import { db } from '@/db/db.model';
 import { useAppSelector } from '@/utils/redux/hooks';
@@ -18,9 +18,11 @@ type InitialValues = {
   time_end: string;
   guest: string;
 };
+
 const FormCreateEvent = () => {
-  const { xAxis, yAxis } = useAppSelector((state) => state.calendar)
-  const { inputWithPattern, generateRandomId, generatePastelColor } = useGeneral();
+  const { xAxis, yAxis } = useAppSelector((state) => state.calendar);
+  const { inputWithPattern, generateRandomId, generatePastelColor } =
+    useGeneral();
   const [initialValues] = useState({
     name: '',
     time_start: '',
@@ -32,6 +34,7 @@ const FormCreateEvent = () => {
   });
   const formik = useFormik({
     initialValues: initialValues,
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (
       values: InitialValues,
@@ -44,6 +47,7 @@ const FormCreateEvent = () => {
   const convertToArray = (value: string) => {
     return value.split(',');
   };
+  
   const handleChange = (params: { value: string | undefined; key: string }) => {
     const { value, key } = params;
     switch (key) {
@@ -81,6 +85,14 @@ const FormCreateEvent = () => {
         break;
     }
   };
+  
+  const handleCloseDialog = () => {
+    const closeDialogCreate = document.getElementById('closeDialogCreate')
+    if(closeDialogCreate) {
+      closeDialogCreate.click()
+    }
+  }
+
   const handleSubmit: FormikSubmit<InitialValues> = async (
     values,
     { setSubmitting }
@@ -92,7 +104,8 @@ const FormCreateEvent = () => {
           xAxis: xAxis,
           yAxis: yAxis,
           name: values.name,
-          time: `${values.time_start}-${values.time_end}`,
+          time_start: values.time_start,
+          time_end: values.time_end,
           guest: values.guest,
           markerColor: generatePastelColor(),
         },
@@ -100,10 +113,7 @@ const FormCreateEvent = () => {
     };
     await db.events.add(payload.body.data);
     setSubmitting(false);
-    const closeDialogCreate = document.getElementById('closeDialogCreate');
-    if (closeDialogCreate) {
-      closeDialogCreate.click();
-    }
+    handleCloseDialog()
   };
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -208,15 +218,24 @@ const FormCreateEvent = () => {
           );
         })}
       </div>
-      <Button
-        type="submit"
-        customClass="w-full"
-        loading={formik.isSubmitting}
-        disabled={formik.isSubmitting}
-        customClassSpinner="border-white !w-[24px] !h-[24px]"
-      >
-        Create Event
-      </Button>
+      <div className="flex items-center justify-end">
+        <Button
+          buttonType="light-filled"
+          styleType="outline"
+          customClass="mr-4"
+          onClick={handleCloseDialog}
+        >
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          loading={formik.isSubmitting}
+          disabled={formik.isSubmitting}
+          customClassSpinner="border-white !w-[24px] !h-[24px]"
+        >
+          Create Event
+        </Button>
+      </div>
     </form>
   );
 };

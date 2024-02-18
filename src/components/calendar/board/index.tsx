@@ -3,25 +3,17 @@
 import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import useGeneral from '@/hooks/general/useGeneral';
-import Dropdown from '@/components/base/dropdown';
-import DropdownMenu from '@/components/base/dropdown/menu';
-import Dialog from '@/components/base/dialog';
+import Dropdown from '@/components/base/Dropdown';
+import DropdownMenu from '@/components/base/Dropdown/menu';
+import Dialog from '@/components/base/Dialog';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@/db/db.model';
-import Spinner from '@/components/base/spinner';
-import FormCreateEvent from '@/app/calendar/components/FormCreateEvent';
+import Spinner from '@/components/base/Spinner';
+import FormCreateEvent from '@/components/calendar/Form/FormCreateEvent';
 import { useAppDispatch } from '@/utils/redux/hooks';
-import { setAxis } from '@/store/calendar';
-
-interface Event {
-  id?: string | undefined;
-  xAxis?: number;
-  yAxis?: number;
-  name?: string;
-  time?: string;
-  guest?: string;
-  markerColor?: string;
-}
+import { setAxis, setSelectedEventGlobal } from '@/store/calendar';
+import Button from '@/components/base/Button';
+import FormUpdateEvent from '@/components/calendar/Form/FormUpdateEvent';
 
 const createCalendarBoard = (): CalendarColumnType[][] => {
   // Get the current date
@@ -95,11 +87,13 @@ const CalendarBoard = () => {
     data: {},
     visible: {
       create: false,
+      delete: false,
+      update: false,
     },
   });
   const [loading, setLoading] = useState(true);
 
-  const [selectedEvent, setSelectedEvent] = useState('');
+  const [selectedEvent, setSelectedEvent] = useState<EventType>({});
 
   const handleCommand = async ({
     type,
@@ -140,12 +134,12 @@ const CalendarBoard = () => {
         return newData;
       });
     }
+    const axis = {
+      xAxis: datum ? datum.xAxis : 0,
+      yAxis: datum ? datum.yAxis : 0,
+    };
     switch (type) {
       case 'create':
-        const axis = {
-          xAxis: datum ? datum.xAxis : 0,
-          yAxis: datum ? datum.yAxis : 0,
-        };
         dispatch(setAxis(axis));
         setDialog((prevData) => {
           const newData = JSON.parse(JSON.stringify(prevData));
@@ -154,13 +148,32 @@ const CalendarBoard = () => {
         });
         break;
       case 'update':
-        console.log(`update with datum: `, datum);
+        dispatch(setAxis(axis));
+        setDialog((prevData) => {
+          const newData = JSON.parse(JSON.stringify(prevData));
+          newData.visible.update = !newData.visible.update;
+          return newData;
+        });
         break;
       case 'delete':
-        console.log(`delete with datum: `, datum);
+        setDialog((prevData) => {
+          const newData = JSON.parse(JSON.stringify(prevData));
+          newData.visible.delete = !newData.visible.delete;
+          return newData;
+        });
         break;
       default:
         break;
+    }
+  };
+
+  const handleDeleteEvent = async () => {
+    if (selectedEvent.id) {
+      await db.events.delete(selectedEvent.id);
+      const closeDialogDelete = document.getElementById('closeDialogDelete');
+      if (closeDialogDelete) {
+        closeDialogDelete.click();
+      }
     }
   };
 
@@ -193,14 +206,16 @@ const CalendarBoard = () => {
       };
 
       if (newData[xAxis][yAxis].events.length === 0) {
-        setSelectedEvent('');
+        setSelectedEvent({});
+        dispatch(setSelectedEventGlobal({}));
       }
       return newData;
     });
   };
 
-  const handleSelectEvent = (id: string) => {
-    setSelectedEvent(id);
+  const handleSelectEvent = (datum: {} = {}) => {
+    setSelectedEvent(datum);
+    dispatch(setSelectedEventGlobal(datum));
   };
 
   const handleSetEvent = ({
@@ -232,7 +247,7 @@ const CalendarBoard = () => {
 
   useEffect(() => {
     const events = eventList || [];
-    const groupedEvents = events.reduce<{ [key: string]: Event[] }>(
+    const groupedEvents = events.reduce<{ [key: string]: EventType[] }>(
       (acc, curr) => {
         const key = `${curr.xAxis}-${curr.yAxis}`;
         if (!acc[key]) {
@@ -255,12 +270,14 @@ const CalendarBoard = () => {
         type: 'replace',
       });
     });
-
+    if (!keys.includes(`${selectedEvent.xAxis}-${selectedEvent.yAxis}`)) {
+      handleSetEvent({ xAxis: selectedEvent.xAxis, yAxis: selectedEvent.yAxis, datum: [], type: 'replace'})
+    }
     // False loading
     setTimeout(() => {
       setLoading(false);
     }, 500);
-  }, [eventList]);
+  }, [eventList, selectedEvent]);
 
   if (loading) {
     return (
@@ -333,12 +350,12 @@ const CalendarBoard = () => {
                             key={event.id}
                             className="p-2"
                             style={{ backgroundColor: event.markerColor }}
-                            onClick={() => handleSelectEvent(event.id)}
+                            onClick={() => handleSelectEvent(event)}
                           >
                             {event.name}
                             <Dropdown
                               visible={
-                                column.isOpen && selectedEvent === event.id
+                                column.isOpen && selectedEvent?.id === event.id
                               }
                               customClass="-right-[56px]"
                             >
@@ -356,9 +373,10 @@ const CalendarBoard = () => {
                                 </DropdownMenu>
                               )}
                               <DropdownMenu
-                                handleClick={() =>
+                                handleClick={(e) =>
                                   handleCommand({
                                     type: 'update',
+                                    event: e,
                                     datum: event,
                                   })
                                 }
@@ -366,9 +384,10 @@ const CalendarBoard = () => {
                                 Update Event
                               </DropdownMenu>
                               <DropdownMenu
-                                handleClick={() =>
+                                handleClick={(e) =>
                                   handleCommand({
                                     type: 'delete',
+                                    event: e,
                                     datum: event,
                                   })
                                 }
@@ -396,10 +415,64 @@ const CalendarBoard = () => {
       >
         <FormCreateEvent />
       </Dialog>
+      <Dialog
+        visible={dialog.visible.update}
+        title="Update Event"
+        handleClose={(event) =>
+          handleCommand({ type: 'update', closeOpenedMenu: false, event })
+        }
+      >
+        <FormUpdateEvent />
+      </Dialog>
+      <Dialog
+        visible={dialog.visible.delete}
+        title="Delete Event"
+        handleClose={(event) =>
+          handleCommand({ type: 'delete', closeOpenedMenu: false, event })
+        }
+      >
+        <div className="mb-[24px]">
+          Are you sure you want to delete {selectedEvent.name} event? This
+          action cannot be undone.
+        </div>
+        <div className="flex items-center justify-end">
+          <Button
+            buttonType="light-filled"
+            styleType="outline"
+            customClass="mr-4"
+            onClick={(event) =>
+              handleCommand({ type: 'delete', closeOpenedMenu: false, event })
+            }
+          >
+            Cancel
+          </Button>
+          <Button
+            buttonType="error"
+            styleType="filled"
+            onClick={handleDeleteEvent}
+          >
+            Delete
+          </Button>
+        </div>
+      </Dialog>
       <div
         id="closeDialogCreate"
         onClick={(event) =>
           handleCommand({ type: 'create', closeOpenedMenu: false, event })
+        }
+        className="hidden"
+      />
+      <div
+        id="closeDialogUpdate"
+        onClick={(event) =>
+          handleCommand({ type: 'update', closeOpenedMenu: false, event })
+        }
+        className="hidden"
+      />
+      <div
+        id="closeDialogDelete"
+        onClick={(event) =>
+          handleCommand({ type: 'delete', closeOpenedMenu: false, event })
         }
         className="hidden"
       />
