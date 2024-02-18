@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import calendarReducer from '@/store/calendar';
+import drawerReducer from '@/store/drawer';
 
 export const store = configureStore({
   reducer: {
     calendar: calendarReducer,
+    drawer: drawerReducer
   },
 });
 

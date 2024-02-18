@@ -1,0 +1,22 @@
+.drawer {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background: #FFFFFF;
+  height: 100vh;
+  right: 100%;
+  -webkit-transition-delay: .525s;
+  transition-delay: .525s;
+  -webkit-transition-timing-function: cubic-bezier(.77,0,.175,1);
+  transition-timing-function: cubic-bezier(.77,0,.175,1);
+  transition-duration: .5s;
+  &.show{
+    right: 0%;
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+    -webkit-transition-timing-function: cubic-bezier(.77,0,.175,1);
+    transition-timing-function: cubic-bezier(.77,0,.175,1);
+    -webkit-transition-duration: .5s;
+    transition-duration: .5s;
+  }
+}

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 @import "./utilities/functions";
+@import "./utilities/animation";
 @import "./abstracts/variables";
+@import "./abstracts/fonts";
 @import "./components/form-input";
 @import "./components/form-floating";
+@import "./components/button";

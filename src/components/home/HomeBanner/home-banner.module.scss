@@ -1,0 +1,12 @@
+.banner {
+  background-image: url(/image/home/home-banner.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.banner-overlay {
+  top: 0px;
+  left: 0px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 21.91%);
+}

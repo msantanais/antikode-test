@@ -1,4 +1,6 @@
 const useGeneral = () => {
+  const currentYear: number = new Date().getFullYear();
+
   const generateDate = ({ style = 'eu' }: GenerateDateType) => {
     const daysOfWeek = [
       { key: 'mon', label: 'Monday' },
@@ -69,11 +71,12 @@ const useGeneral = () => {
   };
   
   return {
+    currentYear,
     generateDate,
     generatePastelColor,
     generateRandomId,
     inputWithPattern,
-    noSpace
+    noSpace,
   };
 };
 

@@ -1,0 +1,36 @@
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 16px;
+  width: 16px;
+  .bun, .patty {
+    height: 2px;
+    width: 100%;
+    transition: height 400ms ease-in-out, width 400ms ease-in-out;
+  }
+}
+
+.hamburger:hover {
+  cursor: pointer;
+}
+
+.x:nth-of-type(1) {
+  transition: transform 400ms ease-in-out, width 400ms ease-in-out;
+  transform: rotate(45deg);
+  transform-origin: top left;
+  width: 20px;
+}
+
+.x:nth-of-type(2) {
+  transition: transform 400ms ease-in-out, width 400ms ease-in-out;
+  transform-origin: center;
+  width: 0;
+}
+
+.x:nth-of-type(3) {
+  transition: transform 400ms ease-in-out, width 400ms ease-in-out;
+  transform: rotate(-45deg);
+  transform-origin: bottom left;
+  width: 20px;
+}

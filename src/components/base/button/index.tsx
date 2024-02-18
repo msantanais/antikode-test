@@ -2,7 +2,7 @@
 import React, { FC, useState } from 'react';
 import cn from 'classnames';
 import { ButtonProps } from './types';
-import Spinner from '@/components/base/spinner';
+import Spinner from '@/components/base/Spinner';
 
 const Button: FC<ButtonProps> = ({
   customClass = '',
@@ -10,10 +10,45 @@ const Button: FC<ButtonProps> = ({
   id = 'button',
   loading = false,
   type = 'button',
+  buttonType = 'primary',
+  styleType = 'filled',
   customClassSpinner,
   children,
   onClick,
 }) => {
+  const classType = () => {
+    let styleTypeClass = '';
+
+    switch (styleType) {
+      case 'filled':
+        switch (buttonType) {
+          case 'primary':
+            styleTypeClass = 'bg-blue-500 hover:bg-blue-600 !text-white';
+            break;
+          case 'error':
+            styleTypeClass = 'bg-red-500 hover:bg-red-600 !text-white';
+            break;
+        }
+        break;
+      case 'outline':
+        switch (buttonType) {
+          case 'light-filled':
+            styleTypeClass =
+              '!border !border-base-[#E5E9ED] !text-[#606266]';
+            break;
+          case 'muted':
+            styleTypeClass =
+              '!border !border-base-mutedText !text-base-snackbar';
+            break;
+          default:
+            styleTypeClass = `!border !border-${buttonType}-100 !text-${buttonType}-100`;
+            break;
+        }
+        break;
+    }
+
+    return `${styleTypeClass}`;
+  };
   return (
     <div className="relative">
       {disabled && (
@@ -24,7 +59,8 @@ const Button: FC<ButtonProps> = ({
         type={type}
         style={{ border: 'inherit', fontWeight: 600 }}
         className={cn({
-          'bg-blue-600 hover:bg-blue-700 text-white p-4 rounded relative': true,
+          'text-white p-4 rounded relative': true,
+          [`${classType()}`]: true,
           [`${customClass}`]: customClass,
         })}
         disabled={disabled}
