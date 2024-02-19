@@ -324,9 +324,13 @@ const CalendarBoard = () => {
                       'text-neutral-400': column.disabled,
                       'text-right z-10 relative text-sm': true,
                       'rounded-full flex ml-auto p-1 h-[30px] w-[30px] items-center justify-center':
-                        column.events?.length > 0 || column.date.toString() === getCurrentDate().toString(),
-                      'bg-blue-500 text-white': column.date.toString() === getCurrentDate().toString(),
-                      'bg-white': column.events?.length > 0 && column.date.toString() !== getCurrentDate().toString()
+                        column.events?.length > 0 ||
+                        column.date.toString() === getCurrentDate().toString(),
+                      'bg-blue-500 text-white':
+                        column.date.toString() === getCurrentDate().toString(),
+                      'bg-white':
+                        column.events?.length > 0 &&
+                        column.date.toString() !== getCurrentDate().toString(),
                     })}
                   >
                     {column.date}
@@ -359,11 +363,24 @@ const CalendarBoard = () => {
                             style={{ backgroundColor: event.markerColor }}
                             onClick={() => handleSelectEvent(event)}
                           >
-                            <div className="text-[10px]">{`(${event.time_start}-${event.time_end})`}</div>
+                            {event.time_start !== '' ||
+                            event.time_end !== '' ? (
+                              <div>
+                                <div className="text-[10px]">{`(${
+                                  event.time_start || ''
+                                }${
+                                  (event.time_start !== '' &&
+                                  event.time_end !== '') ? 
+                                  '-' : ''
+                                }${event.time_end || ''})`}</div>
+                              </div>
+                            ) : (
+                              <></>
+                            )}
                             <div
                               className={cn({
                                 'line-clamp-1': column.events.length > 2,
-                                'line-clamp-2': column.events.length > 1,
+                                'line-clamp-2': column.events.length === 2,
                               })}
                             >
                               {event.name}
