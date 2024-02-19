@@ -1,6 +1,6 @@
 # Antikode Take Home Test
 ## Test Description
-Create a simple calendar for logic test, and e-commerce for styling test using NextJS Typscript with Tailwind CSS
+Create a simple calendar for logic test, and e-commerce for styling test using NextJS Typescript with Tailwind CSS
 
 ## Library and Tech Stack
 Library for calendar: 
