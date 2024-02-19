@@ -3,19 +3,14 @@
 import React, { useEffect, useRef } from 'react';
 
 const DynamicHtmlRender: React.FC<DynamicHtmlPropsType> = ({ id, html }) => {
-  const isMounted = useRef(false);
-
   useEffect(() => {
-    if (isMounted.current) {
-      const newElement = document.createElement('div');
-      newElement.innerHTML = html;
-      const parent = document.getElementById(id);
-      if (parent) {
-        parent.appendChild(newElement as Node);
-      }
-    } else {
-      // Mark the component as mounted
-      isMounted.current = true;
+    const newElement = document.createElement('div');
+    newElement.innerHTML = html;
+    const parent = document.getElementById(id);
+    const child = parent?.children.length
+    console.log(child)
+    if (parent && child === 0) {
+      parent.appendChild(newElement as Node);
     }
   }, [id, html]);
 
