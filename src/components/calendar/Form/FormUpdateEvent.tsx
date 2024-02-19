@@ -106,6 +106,7 @@ const FormUpdateEvent = () => {
           time_end: values.time_end,
           guest: values.guest,
           markerColor: selectedEvent.markerColor || generatePastelColor(),
+          updated_at: new Date().toLocaleString()
         },
       },
     };

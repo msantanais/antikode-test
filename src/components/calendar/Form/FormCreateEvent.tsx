@@ -108,6 +108,7 @@ const FormCreateEvent = () => {
           time_end: values.time_end,
           guest: values.guest,
           markerColor: generatePastelColor(),
+          created_at: new Date().toLocaleString(),
         },
       },
     };

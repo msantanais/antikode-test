@@ -79,7 +79,7 @@ const createCalendarBoard = (): CalendarColumnType[][] => {
 const CalendarBoard = () => {
   const eventList = useLiveQuery(() => db.events.toArray());
   const dispatch = useAppDispatch();
-  const { generateDate } = useGeneral();
+  const { generateDate, getCurrentDate } = useGeneral();
   const [calendarBoard, setCalendarBoard] = useState<CalendarColumnType[][]>(
     createCalendarBoard()
   );
@@ -271,7 +271,12 @@ const CalendarBoard = () => {
       });
     });
     if (!keys.includes(`${selectedEvent.xAxis}-${selectedEvent.yAxis}`)) {
-      handleSetEvent({ xAxis: selectedEvent.xAxis, yAxis: selectedEvent.yAxis, datum: [], type: 'replace'})
+      handleSetEvent({
+        xAxis: selectedEvent.xAxis,
+        yAxis: selectedEvent.yAxis,
+        datum: [],
+        type: 'replace',
+      });
     }
     // False loading
     setTimeout(() => {
@@ -318,8 +323,10 @@ const CalendarBoard = () => {
                     className={cn({
                       'text-neutral-400': column.disabled,
                       'text-right z-10 relative text-sm': true,
-                      'bg-white rounded-full flex ml-auto p-1 h-[30px] w-[30px] items-center justify-center':
-                        column.events?.length > 0,
+                      'rounded-full flex ml-auto p-1 h-[30px] w-[30px] items-center justify-center':
+                        column.events?.length > 0 || column.date.toString() === getCurrentDate().toString(),
+                      'bg-blue-500 text-white': column.date.toString() === getCurrentDate().toString(),
+                      'bg-white': column.events?.length > 0 && column.date.toString() !== getCurrentDate().toString()
                     })}
                   >
                     {column.date}
@@ -352,7 +359,15 @@ const CalendarBoard = () => {
                             style={{ backgroundColor: event.markerColor }}
                             onClick={() => handleSelectEvent(event)}
                           >
-                            {event.name}
+                            <div className="text-[10px]">{`(${event.time_start}-${event.time_end})`}</div>
+                            <div
+                              className={cn({
+                                'line-clamp-1': column.events.length > 2,
+                                'line-clamp-2': column.events.length > 1,
+                              })}
+                            >
+                              {event.name}
+                            </div>
                             <Dropdown
                               visible={
                                 column.isOpen && selectedEvent?.id === event.id

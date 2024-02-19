@@ -1,6 +1,9 @@
 const useGeneral = () => {
+  const getCurrentDate = () => {
+    const today = new Date();
+    return today.getDate();
+  };
   const currentYear: number = new Date().getFullYear();
-
   const generateDate = ({ style = 'eu' }: GenerateDateType) => {
     const daysOfWeek = [
       { key: 'mon', label: 'Monday' },
@@ -31,8 +34,8 @@ const useGeneral = () => {
     const g = Math.floor(Math.random() * (max - min + 1)) + min;
     const b = Math.floor(Math.random() * (max - min + 1)) + min;
     const hex = ((r << 16) | (g << 8) | b).toString(16);
-    return "#" + hex.padStart(6, "0");
-  }
+    return '#' + hex.padStart(6, '0');
+  };
 
   const generateRandomId = (length: number) => {
     let result = '';
@@ -46,7 +49,7 @@ const useGeneral = () => {
     }
     return result;
   };
-  
+
   const inputWithPattern = (pattern: string, value: string) => {
     const trueValue: Array<string> = [];
     let index = 0;
@@ -69,9 +72,10 @@ const useGeneral = () => {
     }
     return '';
   };
-  
+
   return {
     currentYear,
+    getCurrentDate,
     generateDate,
     generatePastelColor,
     generateRandomId,

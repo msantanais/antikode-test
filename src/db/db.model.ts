@@ -9,6 +9,8 @@ export interface Event {
   time_end: string;
   guest: string;
   markerColor: string;
+  created_at?: string;
+  updated_at?: string;
 }
 export class DB extends Dexie {
   events!: Table<Event>; 
