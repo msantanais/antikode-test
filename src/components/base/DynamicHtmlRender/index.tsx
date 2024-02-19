@@ -8,7 +8,6 @@ const DynamicHtmlRender: React.FC<DynamicHtmlPropsType> = ({ id, html }) => {
     newElement.innerHTML = html;
     const parent = document.getElementById(id);
     const child = parent?.children.length
-    console.log(child)
     if (parent && child === 0) {
       parent.appendChild(newElement as Node);
     }
