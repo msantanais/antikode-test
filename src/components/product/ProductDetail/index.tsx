@@ -157,10 +157,11 @@ const ProductDetail = () => {
                   <button
                     disabled={selectedProduct === ''}
                     className={cn({
-                      'bg-black text-white sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full mb-[8px]':
+                      'sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full mb-[8px]':
                         true,
                       'bg-[#d7d7d7] text-[#191919] cursor-not-allowed':
                         selectedProduct === '',
+                      'bg-black text-white': selectedProduct !== ''
                     })}
                   >
                     Buy Now
@@ -168,10 +169,11 @@ const ProductDetail = () => {
                   <button
                     disabled={selectedProduct === ''}
                     className={cn({
-                      'border border-solid border-black sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full mb-[8px]':
+                      'border border-solid sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full mb-[8px]':
                         true,
                       'border border-[#d7d7d7] text-[#191919] cursor-not-allowed':
                         selectedProduct === '',
+                      'border-black': selectedProduct !== ''
                     })}
                   >
                     Add to Bag
@@ -273,10 +275,11 @@ const ProductDetail = () => {
                 <button
                   disabled={selectedProduct === ''}
                   className={cn({
-                    'bg-black text-white sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full mr-[8px]':
+                    'sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full mr-[8px]':
                       true,
                     'bg-[#d7d7d7] text-[#191919] cursor-not-allowed':
                       selectedProduct === '',
+                    'bg-black text-white': selectedProduct !== ''
                   })}
                 >
                   Buy Now
@@ -284,10 +287,11 @@ const ProductDetail = () => {
                 <button
                   disabled={selectedProduct === ''}
                   className={cn({
-                    'border border-solid border-black sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full ml-[8px]':
+                    'border border-solid sans font-medium text-[16px] leading-[19px] py-[14px] px-[20px] text-center w-full ml-[8px]':
                       true,
                     'border border-[#d7d7d7] text-[#191919] cursor-not-allowed':
                       selectedProduct === '',
+                    'border-black': selectedProduct !== ''
                   })}
                 >
                   Add to Bag
