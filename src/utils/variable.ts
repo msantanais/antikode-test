@@ -205,7 +205,7 @@ export const otherProductList = [
     name: '#FXXKINGCOMPASS Tote Bag',
     price: '632.000',
     image: '/image/other-product/other-product-2.png',
-    slug: 'gazelle-low-black',
+    slug: 'fxxkingcompas-tote-bag',
     stock: {
       'eu-35': 1,
       'eu-36': 1,
@@ -279,14 +279,14 @@ export const otherProductList = [
       '/image/placeholder/placeholder-1299.png',
     ],
     description:
-      'The original silhouette of Compass that started it all in 1998. Re-designed to combine classic vintage with modern details, the Gazelle® Low Blue is your ideal every day footwear. Its low-cut design embodies an easy-going effortless style that is versatile for all ocassion and look.',
+      'The original silhouette of Compass that started it all in 1998. Re-designed to combine classic vintage with modern details, the Boy Pablo T-Shirt Black is your ideal every day footwear. Its low-cut design embodies an easy-going effortless style that is versatile for all ocassion and look.',
     moreContent:
       '<ul><li>Low cut</li><li>Upper made of 12 oz canvas</li><li>Upper lining made of 6oz canvas</li><li>Sidetrim logo made of PVC material</li><li>Silver eyelets</li><li>Polyester shoelaces</li><li>Customised woven label</li><li>Rubber outsole</li><li>Vulcanisation process</li><li>Made in Indonesia</li></ul>',
     id: 'product-5',
-    name: 'Gazelle® Low Blue',
+    name: 'Boy Pablo T-Shirt Black',
     price: '515.000',
     image: '/image/other-product/other-product-5.png',
-    slug: 'gazelle-low-blue',
+    slug: 'boy-pablo-t-shit-black',
     stock: {
       'eu-35': 1,
       'eu-36': 1,
