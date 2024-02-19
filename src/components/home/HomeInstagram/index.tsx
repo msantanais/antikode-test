@@ -79,7 +79,7 @@ const HomeInstagram = () => {
           <></>
         )}
       </SwipeScroll>
-      <div className="flex items-center justify-end -mt-[20px]">
+      <div className="flex items-center justify-end -mt-[20px] relative z-20">
         <a
           href="https://www.instagram.com/sepatucompass/"
           target="_blank"

@@ -56,9 +56,6 @@ const HomeInspirationSpotlight = () => {
                 <JournalCard
                   key={journal.id}
                   data={journal}
-                  className={
-                    index + 1 !== journalList.length ? 'mr-[16px]' : ''
-                  }
                 />
               );
             })

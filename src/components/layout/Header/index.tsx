@@ -11,12 +11,15 @@ import Drawer from '@/components/base/Drawer';
 import { useAppDispatch, useAppSelector } from '@/utils/redux/hooks';
 import { setShowDrawer } from '@/store/drawer';
 import IconHamburgerToX from '@/components/icons/IconHamburgerToX';
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [forceScrolled, setForceScrolled] = useState(false);
   const { showDrawer } = useAppSelector((state) => state.drawer);
-  const dispatch = useAppDispatch();
+  const pathname = usePathname();
 
+  const dispatch = useAppDispatch();
   const navbarList = {
     left: [
       {
@@ -39,19 +42,19 @@ const Header = () => {
     right: [
       {
         key: 'search',
-        icon: <IconSearch fill={isScrolled ? 'black' : 'white'} />,
+        icon: <IconSearch fill={isScrolled || pathname !== '/' ? 'black' : 'white'} />,
         className: 'cursor-pointer',
         onClick: () => {},
       },
       {
         key: 'profile',
-        icon: <IconProfile fill={isScrolled ? 'black' : 'white'} />,
+        icon: <IconProfile fill={isScrolled || pathname !== '/' ? 'black' : 'white'} />,
         className: 'cursor-pointer',
         onClick: () => {},
       },
       {
         key: 'empty-bag',
-        icon: <IconEmptyBag fill={isScrolled ? 'black' : 'white'} />,
+        icon: <IconEmptyBag fill={isScrolled || pathname !== '/' ? 'black' : 'white'} />,
         className: 'hidden lg:block cursor-pointer',
         onClick: () => {},
       },
@@ -59,7 +62,7 @@ const Header = () => {
         key: 'empty-bag-test',
         icon: (
           <IconHamburgerToX
-            fill={isScrolled || showDrawer ? 'bg-black' : 'bg-white'}
+            fill={isScrolled || showDrawer || pathname !== '/' ? 'bg-black' : 'bg-white'}
           />
         ),
         className: `flex items-center lg:hidden relative z-30 cursor-pointer`,
@@ -68,24 +71,29 @@ const Header = () => {
     ],
   };
 
-  const handleScroll = () => {
-    const scrolled = window.scrollY !== 0;
-    if (scrolled) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY !== 0;
+      if (scrolled) {
+        setIsScrolled(true);
+      } else if (!scrolled) {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
     const scrolled = window.scrollY !== 0;
     if (scrolled) {
       setIsScrolled(true);
     } else {
       setIsScrolled(false);
     }
-    window.addEventListener('scroll', handleScroll);
-  }, []);
+
+    if (pathname !== '/') {
+      setForceScrolled(true);
+      setIsScrolled(true);
+    }
+  }, [pathname]);
 
   return (
     <nav
@@ -98,7 +106,9 @@ const Header = () => {
       <div className="container px-[20px] lg:px-[40px] py-[20px]">
         <ul className={cn({ [headerClass.navbar]: true, flex: true })}>
           <li className="flex items-center lg:pr-[60px]">
-            <IconCompass fill={isScrolled ? 'black' : 'white'} />
+            <a href="/">
+              <IconCompass fill={isScrolled || pathname !== '/' ? 'black' : 'white'} />
+            </a>
           </li>
           {navbarList.left.map(
             (datum: { url: string; label: string }, index) => {
@@ -107,8 +117,8 @@ const Header = () => {
                   key={datum.url}
                   className={cn({
                     'pr-[24px]': index + 1 !== navbarList.left.length,
-                    'text-black': isScrolled,
-                    'text-white': !isScrolled,
+                    'text-black': isScrolled || pathname !== '/',
+                    'text-white': !isScrolled && pathname === '/' ,
                     'hidden lg:block': true,
                   })}
                 >
@@ -129,7 +139,14 @@ const Header = () => {
                 onClick={datum.onClick}
               >
                 <div className="relative">
-                  <div className={cn({"underline-animation": index + 1 !== navbarList.right.length})}>{datum.icon}</div>
+                  <div
+                    className={cn({
+                      'underline-animation':
+                        index + 1 !== navbarList.right.length,
+                    })}
+                  >
+                    {datum.icon}
+                  </div>
                 </div>
               </li>
             );

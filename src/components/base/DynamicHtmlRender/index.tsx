@@ -1,18 +1,25 @@
-import React, { useEffect } from 'react';
+'use client';
 
-const DynamicHtmlComponent: React.FC<DynamicHtmlPropsType> = ({ id, html }) => {
+import React, { useEffect, useRef } from 'react';
+
+const DynamicHtmlRender: React.FC<DynamicHtmlPropsType> = ({ id, html }) => {
+  const isMounted = useRef(false);
+
   useEffect(() => {
-    const newElement = document.createElement('div');
-    newElement.innerHTML = html;
-    const parent = document.getElementById(id);
-    if (parent) {
-      parent.appendChild(newElement.firstChild as Node);
+    if (isMounted.current) {
+      const newElement = document.createElement('div');
+      newElement.innerHTML = html;
+      const parent = document.getElementById(id);
+      if (parent) {
+        parent.appendChild(newElement as Node);
+      }
+    } else {
+      // Mark the component as mounted
+      isMounted.current = true;
     }
   }, [id, html]);
 
-  return (
-    <div id={id}></div>
-  );
+  return <div id={id}></div>;
 };
 
-export default DynamicHtmlComponent;
+export default DynamicHtmlRender;

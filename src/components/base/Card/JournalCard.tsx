@@ -9,7 +9,7 @@ const JournalCard = ({
   className?: string;
 }) => {
   return (
-    <div className={cn({ [`${className}`]: true, 'w-[300px] shrink-0 mr-[16px]': true })}>
+    <div className={cn({ [`${className}`]: true, 'w-[300px] shrink-0 cursor-pointer': true })}>
       <div className='grid grid-cols-[120px,180px] gap-[16px]'>
         <Image
           src={data.image || ''}
@@ -18,7 +18,7 @@ const JournalCard = ({
           height={120}
         />
         <div className='grid grid-rows-[min-content,auto]'>
-          <div className='sans allcaps-18 font-bold line-clamp-4'>
+          <div className='sans allcaps-18 font-bold line-clamp-4 mr-[16px]'>
             {data.title}
           </div>
           <div className='sans allcaps-12 text-darkCharcoal flex items-end'>
